@@ -1,0 +1,143 @@
+.gradient-custom {
+/* fallback for old browsers */
+background: #6a11cb;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+
+.verify-temp .height-100 {
+  height: 80vh;
+}
+
+.verify-temp .card {
+  width: 400px;
+  border: none;
+  height: 300px;
+  box-shadow: 0px 5px 20px 0px #d2dae3;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FIXED: Applied gradient to the heading text */
+.verify-temp .card h6 {
+  font-size: 20px;
+  background-image: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  -webkit-background-clip: text; /* For Safari/Chrome */
+  background-clip: text;
+  color: transparent;
+}
+
+.verify-temp .inputs input {
+  width: 40px;
+  height: 40px;
+}
+
+.verify-temp input[type=number]::-webkit-inner-spin-button,
+.verify-temp input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.verify-temp .card-2 {
+  background-color: #fff;
+  padding: 10px;
+  width: 350px;
+  height: 100px;
+  bottom: -50px;
+  left: 20px;
+  position: absolute;
+  border-radius: 5px;
+}
+
+.verify-temp .card-2 .content {
+  margin-top: 50px;
+}
+
+/* CHANGED: Applied gradient to the link text */
+.verify-temp .card-2 .content a {
+  font-weight: bold; /* Added for better visibility */
+  background-image: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  -webkit-background-clip: text; /* For Safari/Chrome */
+  background-clip: text;
+  color: transparent;
+}
+
+/* CHANGED: Applied gradient to the input's focus border */
+.verify-temp .form-control:focus {
+  box-shadow: none;
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  border-image-slice: 1;
+}
+
+.verify-temp #resendBtn {
+  /* Apply the gradient to the background */
+  background-image: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+  /* Clip the background to the text shape */
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Make the text color transparent to show the gradient behind it */
+  color: transparent;
+
+  /* Additional styling for better appearance */
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.verify-temp .validate {
+  border-radius: 20px;
+  height: 40px;
+  width: 140px;
+  background-image: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative; /* Needed for pseudo-element positioning */
+  overflow: hidden; /* Hides the pseudo-element when outside the button */
+  z-index: 1; /* Ensures text is above the shimmer */
+}
+
+.verify-temp .validate:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* NEW: Shimmer effect */
+.verify-temp .validate::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%; /* Start off-screen to the left */
+  width: 100%;
+  height: 100%;
+  /* Apply a slightly lighter/different gradient for the shimmer */
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4), /* Semi-transparent white for shimmer */
+    transparent
+  );
+  transition: left 0.7s ease; /* Animate the 'left' property */
+  z-index: 2; /* Shimmer on top of button background but below text */
+}
+
+.verify-temp .validate:hover::after {
+  left: 100%; /* End off-screen to the right, creating the swipe effect */
+}
+
+/* Ensure text stays on top of the shimmer */
+.verify-temp .validate span { /* If your button text is in a span, target it */
+  position: relative;
+  z-index: 3;
+}
