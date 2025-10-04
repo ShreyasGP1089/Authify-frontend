@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom'
 import { useRef, useEffect } from "react";
 import axios from 'axios';
 import { AppContext } from '../Context/AppContext';
+import { useNavigate } from 'react-router-dom'; 
 
 
 const LoginTemp = () => {
+
+  const navigate=useNavigate();
 
   const userNameRef=useRef(null);
 
@@ -18,7 +21,8 @@ const LoginTemp = () => {
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
-  const BACKEND_URL= React.useContext(AppContext);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const {backendurl}= React.useContext(AppContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -30,9 +34,13 @@ const LoginTemp = () => {
     axios.defaults.withCredentials = true;
     setLoading(true);
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/v1.0/auth/login`, { email, password });
+      const response = await axios.post(`${backendurl}/api/v1.0/login`, { email, password });
       setLoading(false);
       console.log(response.data);
+      setLoggedIn(true);
+      setEmail("");
+      setPassword("");
+      navigate('/dashboard');
 }
   catch (error) {
       console.log(error);

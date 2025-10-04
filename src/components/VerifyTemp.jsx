@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import axios from "axios";
 // NEW: Imported useNavigate
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 
 const VerifyTemp = () => {
@@ -9,6 +9,9 @@ const VerifyTemp = () => {
     const navigate = useNavigate();
     const { email } = useParams();
     const { backendurl } = useContext(AppContext);
+
+    const location = useLocation();
+const isPasswordUpdate = location.state?.from === 'password-update';
 
     const [otp, setOtp] = useState(new Array(6).fill(""));
     const [message, setMessage] = useState("");
@@ -27,16 +30,20 @@ const VerifyTemp = () => {
     }, [resendTimer]);
 
     // NEW: useEffect to handle navigation after verification
-    useEffect(() => {
-        if (isVerified) {
-            const timer = setTimeout(() => {
+useEffect(() => {
+    if (isVerified) {
+        const timer = setTimeout(() => {
+            if (isPasswordUpdate) {
+                // Navigate to reset password page
+                navigate('/reset-password', { state: { email } });
+            } else {
+                // Original: navigate to login after registration
                 navigate('/login');
-            }, 2000); // 2-second delay
-
-            // Cleanup function to prevent memory leaks
-            return () => clearTimeout(timer);
-        }
-    }, [isVerified, navigate]);
+            }
+        }, 2000);
+        return () => clearTimeout(timer);
+    }
+}, [isVerified, navigate, isPasswordUpdate, email]);
 
     const handleOtpChange = (e, index) => {
         const value = e.target.value;
@@ -126,8 +133,10 @@ const VerifyTemp = () => {
                 <div className="position-relative">
                     <div className="card p-3 p-md-4 text-center">
                         <h6>
-                            Please enter the one time password <br /> to verify your account
-                        </h6>
+    {isPasswordUpdate 
+        ? "Please verify your identity to update password" 
+        : "Please enter the one time password to verify your account"}
+</h6>
                         <div>
                             <span>A code has been sent to </span>
                             <small id="maskedNumber">{maskEmail(email)}</small>
